@@ -1,0 +1,9 @@
+{% extends 'cliente/base.html' %}
+
+{% block content %}
+    <form method="POST" class="post-form" >{% csrf_token %}
+        {{ form.as_p }}
+        <button type="reset" class="mdl-button mdl-js-button mdl-button--raised">Limpar</button>
+        <button type="submit" class="mdl-button mdl-js-button mdl-button--raised">Avançar</button>
+    </form>
+{% endblock %}
