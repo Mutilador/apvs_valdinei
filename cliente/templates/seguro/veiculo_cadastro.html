@@ -1,0 +1,14 @@
+{% extends 'cliente/base.html' %}
+
+{% block content %}
+    <form method="POST" class="post-form" >{% csrf_token %}
+        <select id="marcas-dropdown" name="marcas">
+        </select><br/><br/>
+        <select id="modelos-dropdown" name="modelos">
+        </select><br/><br/>
+        <select id="anos-dropdown" name="anos">
+        </select><br/><br/>
+        <button type="reset" class="mdl-button mdl-js-button mdl-button--raised">Limpar</button>
+        <button type="submit" class="mdl-button mdl-js-button mdl-button--raised">Avançar</button>
+    </form>
+{% endblock %}
