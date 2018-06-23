@@ -1,0 +1,27 @@
+{% extends 'cliente/base.html' %}
+
+{% block content %}
+    <form method="POST" class="post-form" action="/register/">{% csrf_token %}
+        <div id="myCadastro" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <select id="marcas-dropdown" name="marcas" class="mdl-textfield__input">
+            </select><br/><br/>
+            <select id="modelos-dropdown" name="modelos" class="mdl-textfield__input">
+            </select><br/><br/>
+            <select id="anos-dropdown" name="anos" class="mdl-textfield__input">
+            </select><br/>
+            Valor do Veículo: <label id="lblValor"></label>
+        </div>
+        <div  class="btn_veiculo_cadastro" align="center">
+            <table style="width:50%">
+                <tr>
+                    <th>
+                        <button type="reset" class="mdl-button mdl-js-button mdl-button--raised" style="left: 50px;">Limpar</button>
+                    </th>
+                    <th>
+                        <button type="submit" class="mdl-button mdl-js-button mdl-button--raised" style="right: 50px;">Avançar</button>
+                    </th>
+                </tr>
+            </table>
+        </div>
+    </form>
+{% endblock %}

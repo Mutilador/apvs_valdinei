@@ -14,3 +14,17 @@ class Cliente(models.Model):
     def __str__(self):
         return self.nome
 
+# Create your models here.
+class FipeDetail(models.Model):
+    user = models.OneToOneField(Cliente,
+        on_delete=models.CASCADE,
+        primary_key=True,)
+    marca = models.CharField(max_length=200)
+    modelo = models.CharField(max_length=200)
+    ano = models.IntegerField()
+    valor = models.CharField(max_length=200)
+
+
+    def __str__(self):
+        return self.nome
+

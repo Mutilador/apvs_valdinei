@@ -1,0 +1,21 @@
+{% extends 'cliente/base.html' %}
+
+{% block content %}
+    <form method="POST" class="post-form" action="/fipe_register/">{% csrf_token %}
+        <div id="myCadastro" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            {{ form.as_p }}
+        </div>
+        <div  class="btn_veiculo_cadastro" align="center">
+            <table style="width:50%">
+                <tr>
+                    <th>
+                        <button type="reset" class="mdl-button mdl-js-button mdl-button--raised" style="left: 50px;">Limpar</button>
+                    </th>
+                    <th>
+                        <button type="submit" class="mdl-button mdl-js-button mdl-button--raised" style="right: 50px;">Avançar</button>
+                    </th>
+                </tr>
+            </table>
+        </div>
+    </form>
+{% endblock %}

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.utils import timezone
-from .forms import ClienteForm
+from .forms import ClienteForm, FipeDetailsForm
+from .models import Cliente, FipeDetail
 from django.http import HttpResponseRedirect
 
 # Create your views here.
@@ -9,19 +10,37 @@ def cadastro_cliente(request):
     if request.method == "POST":
         form = ClienteForm(request.POST)
         if form.is_valid():
-            return HttpResponseRedirect('/register-car/')
+            newCliente = Cliente()
+            newCliente.nome = form.cleaned_data['nome']
+            newCliente.email = form.cleaned_data['email']
+            newCliente.telefone = form.cleaned_data['telefone']
+            newCliente.cidade = form.cleaned_data['cidade']
+            newCliente.bairro = form.cleaned_data['bairro']
+            newCliente.save()
+            form = FipeDetailsForm(initial={'user': newCliente})
+            return render(request, 'fipe/veiculo_cadastro.html', {'form': form})
     else:
         form = ClienteForm()
 
     return render(request, 'cliente/cadastro_cliente.html', {'form': form})
 
 
-def register_car(request):
+# Create your views here.
+def fipe_register(request):
     if request.method == "POST":
-        form = ClienteForm(request.POST)
+        form = FipeDetailsForm(request.POST)
         if form.is_valid():
-            return HttpResponseRedirect('/register-car/')
+            newFipe = FipeDetail()
+            newFipe.marca = form.cleaned_data['marca']
+            newFipe.modelo = form.cleaned_data['modelo']
+            newFipe.ano = form.cleaned_data['ano']
+            newFipe.valor = form.cleaned_data['valor']
+            newFipe.save()
+            return HttpResponseRedirect('/seguro_detail/')
     else:
-        form = ClienteForm()
+        form = FipeDetailsForm()
 
-    return render(request, 'cliente/index2.html', {'form': form})
+    return render(request, 'fipe/veiculo_cadastro.html', {'form': form})
+
+def seguro_detail(request):
+    pass

@@ -60,7 +60,8 @@ foreach ($dados as $key => $marcas) {
 
 			$masterJson[] = array_merge($apiData, [
 				'marca' => $marcas['nome'],
-				'modelo' => $modelos['modelo'],				
+				'modelo' => $modelos['modelo'],
+				'valor' => $modelos['valor'],
 			]);
 		}
 	}
