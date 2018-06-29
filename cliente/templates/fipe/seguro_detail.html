@@ -1,5 +1,76 @@
 {% extends 'cliente/base.html' %}
 
 {% block content %}
-    TESTE
+    <form method="POST" class="post-form" action="/seguro_detail/">{% csrf_token %}
+        <div id="mySeguroCadastro" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+            <table cellspacing="10">
+                <tr>
+                    <td>
+                        <label><b>Aumentar a distância do reboque por evento</b></label><br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class = "mdl-radio mdl-js-radio mdl-js-ripple-effect" for = "reboque_300">
+                            {{ form.choice_reboque_distancia.0}}
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class = "mdl-radio mdl-js-radio mdl-js-ripple-effect" for = "reboque_500">
+                            {{ form.choice_reboque_distancia.1}}
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label><b>Quantos dias de carro reserva?</b></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class = "mdl-radio mdl-js-radio mdl-js-ripple-effect" for = "reserva_7">
+                            {{ form.choice_reserva.0}}
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class = "mdl-radio mdl-js-radio mdl-js-ripple-effect" for = "reserva_14">
+                            {{ form.choice_reserva.1}}
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class = "mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for = "vidros">
+                          {{ form.choice_reembolso }}
+                            <span class = "mdl-checkbox__label">Reembolso de 70% p/ faróis, vidros e espelhos R$ 10,00</span>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class = "mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for = "dano_terceiros">
+                          {{ form.choice_dano }}
+                            <span class = "mdl-checkbox__label">Aumentar o reembolso de danos a terceiros R$ 20,75</span>
+                        </label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div  class="btn_veiculo_cadastro" align="center">
+            <table style="width:50%">
+                <tr>
+                    <th>
+                        <button type="reset" class="mdl-button mdl-js-button mdl-button--raised" style="left: 50px;">Limpar</button>
+                    </th>
+                    <th>
+                        <button type="submit" class="mdl-button mdl-js-button mdl-button--raised" style="right: 50px;">Avançar</button>
+                    </th>
+                </tr>
+            </table>
+        </div>
+    </form>
 {% endblock %}

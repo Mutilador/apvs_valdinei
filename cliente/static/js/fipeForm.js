@@ -9,41 +9,29 @@ let dropdownModelos = $('#modelos-dropdown');
 
 let dropdownAnoModelos = $('#anos-dropdown');
 
-var marcas = []
-var marcasFiltradas = [];
 
-var modelos = [];
-var modelosFiltrados =  [];
 
-var carDetails = [];
-var modelDetails = [];
+var modelos;
+
 var lblValor = document.getElementById("valor-fipe");
+lblValor.readOnly = true;
 
 var valorVeiculo = "";
+var valores = {};
+var anos_list = {};
 
 function dropDownModelosClear()
 {
     dropdownModelos.empty();
-    modelos = [];
-    modelosFiltrados = [];
-
     dropdownAnoModelos.empty();
-
+    valores = {};
 }
 
 // Populate dropdown with list of provinces
 $.getJSON(url, function (data) {
 
-  $.each(data, function (key, entry) {
-        marcas[key] = entry['marca']
-  })
-
-  $(marcas).each(function (key, entry){
-       if($.inArray(entry, marcasFiltradas) === -1) marcasFiltradas.push(entry);
-  });
-
-  $(marcasFiltradas).each(function (key, elemento) {
-        dropdownMarcas.append($('<option></option>').attr('value', key).text(elemento));
+  $(Object.keys(data)).each(function (key, elemento) {
+        dropdownMarcas.append($('<option></option>').prop('value',elemento).text(elemento));
   });
 
 });
@@ -59,23 +47,17 @@ $.getJSON(url, function (data) {
 
     $.getJSON(url, function (data) {
 
-      $.each(data, function (key, entry) {
+      $.each(Object.keys(data), function (key, entry) {
 
-            if($("#marcas-dropdown option:selected").text() == entry['marca'])
+            if($("#marcas-dropdown option:selected").text() == entry)
             {
-                modelos[key] = entry['modelo'];
+                modelo = Object.keys(data[entry]);
+                $.each(Object.keys(data[entry]), function (key2, entry2) {
+                    dropdownModelos.append($('<option></option>').prop('value',entry2).text(entry2));
+                });
+
             }
-
-      })
-
-      $(modelos).each(function (key, entry){
-            if($.inArray(entry, modelosFiltrados) === -1) modelosFiltrados.push(entry);
       });
-
-      $(modelosFiltrados).each(function (key, elemento) {
-            dropdownModelos.append($('<option></option>').attr('value', key).text(elemento));
-      });
-
     });
 
  });
@@ -87,23 +69,47 @@ $.getJSON(url, function (data) {
     dropdownAnoModelos.append('<option selected="true" disabled>Ano do veiculo</option>');
     dropdownAnoModelos.prop('selectedIndex', 0);
 
-
     $.getJSON(url, function (data) {
 
-        $.each(data, function (key, entry) {
+      $.each(Object.keys(data), function (key, entry) {
 
-            if($("#marcas-dropdown option:selected").text() == entry['marca'] && $("#modelos-dropdown option:selected").text() == entry['modelo'])
+            if($("#marcas-dropdown option:selected").text() == entry)
             {
-                dropdownAnoModelos.append($('<option></option>').attr('value', key).text(entry['anomodelo']));
-                valorVeiculo = entry['valor'].split(" ")[1];
+                $.each(Object.keys(data[entry]), function (key2, entry2) {
+
+                    if($("#modelos-dropdown option:selected").text() == entry2)
+                    {
+                        valores = Object.values(data[entry][entry2]['valor']);
+                        anos_list = Object.values(data[entry][entry2]['anomodelo']);
+                        $.each(Object.values(data[entry][entry2]['anomodelo']), function (key3, entry3) {
+                            dropdownAnoModelos.append($('<option></option>').prop('option', entry3).text(entry3));
+                        });
+                    }
+                });
+
             }
-
-        });
-
+      });
     });
+
  });
+
+ function retornaValor(id)
+ {
+    count = 0;
+    id_count = 0;
+
+    $(anos_list).each( function (key, year) {
+        if (year == id)
+        {
+            id_count = count;
+        }
+        count += 1;
+    });
+    return valores[id_count];
+ }
 
 
 $("#anos-dropdown").change(function (){
-    lblValor.value = valorVeiculo;
+
+    lblValor.value = retornaValor($("#anos-dropdown option:selected").val());
 });
